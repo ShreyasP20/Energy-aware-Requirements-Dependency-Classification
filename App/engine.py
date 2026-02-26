@@ -54,7 +54,6 @@ def parse_llm_response_single(raw_text: str):
     2. Fallback to keyword-based classification
     """
 
-    # --- Attempt JSON parsing ---
     try:
         match = re.search(r'\{.*?\}', raw_text, re.DOTALL)
         if match:
@@ -66,7 +65,6 @@ def parse_llm_response_single(raw_text: str):
     except Exception:
         pass
 
-    # --- Fallback: keyword-based ---
     text = raw_text.lower()
 
     if "conflict" in text or "contradiction" in text:
@@ -80,7 +78,7 @@ def parse_llm_response_single(raw_text: str):
 
     return {
         "label": label,
-        "confidence": 0.5  # conservative default
+        "confidence": 0.5  
     }
     
     
@@ -100,7 +98,6 @@ def run_dynamic_evaluation(
     "few_shot": FEW_SHOT_PROMPT,
     "cot": COT_PROMPT
     }    
-    # Init Managers
     kag = None
     if neo4j_conf.get("enabled"):
         kag = Neo4jRetriever(
@@ -176,11 +173,8 @@ def run_dynamic_evaluation(
     df_out = pd.DataFrame(results_rows)
     out_csv = Path(out_dir) / "dynamic_retrieval_results_rest.csv"
     
-    # Force float format in CSV (12 decimal places)
     df_out.to_csv(out_csv, index=False, float_format='%.12f')
     
-    # --- PRINT PREVIEW WITH FORMATTING ---
-    # Force pandas to display 12 decimal places for floats in console
     pd.set_option('display.float_format', lambda x: '%.12f' % x)
     pd.set_option('display.max_colwidth', None)
     
@@ -195,36 +189,6 @@ def run_dynamic_evaluation(
         print("No results generated.")
     print("="*80)   
     
-    
-
-
-def process_batch(ds_name, anchor, candidates, pipeline_name, llm, rows_list, batch_size):
-    for chunk in chunk_list(candidates, batch_size):
-        cand_str = ""
-        for i, c in enumerate(chunk):
-            cand_str += f"{i+1}. \"{c}\"\n"
-        
-        prompt = BATCH_PROMPT.format(anchor=anchor, candidates_list=cand_str)
-        metrics = llm.classify_batch(prompt)
-        predictions = parse_llm_response(metrics["raw"], len(chunk))
-        
-        batch_n = len(chunk)
-        for i, text_b in enumerate(chunk):
-            pred = predictions[i]
-            rows_list.append({
-                "dataset": ds_name,
-                "pipeline": pipeline_name,
-                "text1": anchor,
-                "text2": text_b,
-                "ground_truth": "N/A (Retrieved)", 
-                "label": pred["label"],
-                "confidence": pred["confidence"],
-                "energy_kwh": metrics["energy_kwh"] / batch_n,
-                "carbon_kg": metrics["carbon_kg"] / batch_n,
-                "avg_power_watts": metrics["avg_power_watts"],
-                "input_tokens": metrics["input_tokens"] / batch_n,
-                "latency_s": metrics["latency_s"] / batch_n,
-            })
             
 
 def process_single(ds_name, anchor, candidate, pipeline_name, llm, rows_list, retreival_emissions=None, retreival_energy=None, prompt_template=None):
@@ -266,9 +230,9 @@ if __name__ == "__main__":
     
     NEO4J_CONF = {
         "enabled": True,
-        "uri": os.getenv("NEO_HOST", "neo4j://localhost:7687"),
-        "user": os.getenv("NEO_USERNAME", "neo4j"),
-        "password": os.getenv("NEO_PASSWORD", "Shreyas@1411"),
+        "uri": os.getenv("NEO_HOST", ""),
+        "user": os.getenv("NEO_USERNAME", ""),
+        "password": os.getenv("NEO_PASSWORD", ""),
         "database": "neo4j"
     }
     

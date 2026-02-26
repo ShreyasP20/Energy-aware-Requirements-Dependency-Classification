@@ -84,7 +84,12 @@ class Neo4jRetriever:
         """
         
         # OTHER DATASETS
-        # query = "MATCH (anchor:Requirement {text: $text, source: $source}) -[:HAS_ACTOR|HAS_ACTION|HAS_OBJECT|HAS_CONDITION]->(ent:Entity) MATCH (ent)<-[:HAS_ACTOR|HAS_ACTION|HAS_OBJECT|HAS_CONDITION]-(r:Requirement {source: $source}) WHERE r.text <> $text WITH r, COUNT(DISTINCT ent) AS overlap_score ORDER BY overlap_score DESC RETURN r.text AS candidate_text LIMIT $k"
+        # query = "MATCH (anchor:Requirement {text: $text, source: $source}) -[:HAS_ACTOR|HAS_ACTION|HAS_OBJECT|HAS_CONDITION]->(ent:Entity) 
+        # MATCH (ent)<-[:HAS_ACTOR|HAS_ACTION|HAS_OBJECT|HAS_CONDITION]-(r:Requirement {source: $source}) 
+        # WHERE r.text <> $text WITH r, COUNT(DISTINCT ent) AS overlap_score 
+        # ORDER BY overlap_score DESC 
+        # RETURN r.text AS candidate_text 
+        # LIMIT $k"
 
         with self.driver.session(database=self.database) as session:
             res = session.run(
@@ -278,9 +283,9 @@ FILES = {
 
 NEO4J_CONF = {
     "enabled": True,
-    "uri": "bolt://localhost:7687",
-    "user": "neo4j",
-    "password": "Shreyas@1411",
+    "uri": "",
+    "user": "",
+    "password": "",
     "database": "neo4j"
 }
 

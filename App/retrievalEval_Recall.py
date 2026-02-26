@@ -9,11 +9,11 @@ from pymilvus import Collection, connections
 from sentence_transformers import SentenceTransformer
 from neo4j import GraphDatabase
 
-os.environ["ZILLIZ_URI"] = "https://in03-69d1fc34bfc5613.serverless.aws-eu-central-1.cloud.zilliz.com"
-os.environ["ZILLIZ_TOKEN"] = "ec1b707c73feb9cb54fba639cf2c846dfcc4f1b31802c329845485b3672f27dccae89d27c0d9f5b40ec970f0c7c2f32567401e54"
-os.environ["NEO4J_URI"] = "neo4j+s://79773b3d.databases.neo4j.io"
-os.environ["NEO4J_USER"] = "neo4j"
-os.environ["NEO4J_PASSWORD"] = "DNto2cc_kgG_nbAPkMQLtlNULLR5--Yp_ldmH7RdRII"
+os.environ["ZILLIZ_URI"] = ""
+os.environ["ZILLIZ_TOKEN"] = ""
+os.environ["NEO4J_URI"] = ""
+os.environ["NEO4J_USER"] = ""
+os.environ["NEO4J_PASSWORD"] = ""
 
 print("CWD:", os.getcwd())
 
@@ -257,9 +257,9 @@ FILES = {
 
 NEO4J_CONF = {
     "enabled": True,
-    "uri": os.getenv("NEO_HOST", "neo4j+s://79773b3d.databases.neo4j.io"),
+    "uri": os.getenv("NEO_HOST", ""),
     "user": os.getenv("NEO_USERNAME", "neo4j"),
-    "password": os.getenv("NEO_PASSWORD", "DNto2cc_kgG_nbAPkMQLtlNULLR5--Yp_ldmH7RdRII"),
+    "password": os.getenv("NEO_PASSWORD", ""),
     "database": "neo4j"
 }
 
