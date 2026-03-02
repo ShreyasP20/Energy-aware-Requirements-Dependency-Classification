@@ -103,11 +103,6 @@ Energy-aware-Requirements-Dependency-Classification/
 
 ### Setup
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/ShreyasP20/Energy-aware-Requirements-Dependency-Classification.git
-cd Energy-aware-Requirements-Dependency-Classification
-```
 
 2. **Create a virtual environment** (optional but recommended)
 ```bash
