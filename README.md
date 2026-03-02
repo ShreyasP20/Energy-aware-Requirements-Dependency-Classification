@@ -230,18 +230,6 @@ Results are saved to:
 - `dataModeling/emissions.csv` - Energy consumption metrics
 - `dataModeling/entity_extraction_energy_latency.csv` - Extraction process metrics
 
-## Citation
-
-If you use this project in your research, please cite:
-
-```bibtex
-@repository{shreyaspatil2024energy,
-  title={Energy-aware Requirements Dependency Classification},
-  author={Patil, Shreyas},
-  year={2024},
-  url={https://github.com/ShreyasP20/Energy-aware-Requirements-Dependency-Classification}
-}
-```
 
 ## Contributing
 
