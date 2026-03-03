@@ -157,42 +157,6 @@ jupyter notebook dataModeling/main.ipynb
 - **Model Comparison**: `scripts/modelcamparison.ipynb`
 - **General Evaluation**: `scripts/evaluation.ipynb`
 
-### Programmatic Usage Example
-
-```python
-from App.engine import Engine
-from App.llm import LLMClient
-from App.graphdb import Neo4jRetriever
-from App.vectordb import MilvusRetriever
-
-# Initialize components
-llm = LLMClient(model="mistral-7b-instruct", temperature=0.0)
-graph_retriever = Neo4jRetriever(
-    uri="bolt://localhost:7687",
-    user="neo4j",
-    password="your_password"
-)
-vector_retriever = MilvusRetriever(
-    host="localhost",
-    port="19530",
-    collection_name="requirements",
-    model_name="all-MiniLM-L6-v2"
-)
-
-# Create engine
-engine = Engine(
-    llm_client=llm,
-    graph_retriever=graph_retriever,
-    vector_retriever=vector_retriever
-)
-
-# Classify requirement pair
-result = engine.classify_pair(
-    text1="Requirement A",
-    text2="Requirement B",
-    source="project_name"
-)
-```
 
 ## Dependencies
 
